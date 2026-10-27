@@ -187,6 +187,12 @@ class TinyModel:
 def fallback_decision(canvas: dict, agent_number: int) -> tuple[int, int, list[int]]:
     seed = f"{canvas_hash(canvas)}:{agent_number}:{now()}"
     rng = random.Random(seed)
+    occupied = set(canvas["pixels"])
+    if len(occupied) < WIDTH * HEIGHT:
+        for _ in range(1000):
+            x, y = rng.randrange(WIDTH), rng.randrange(HEIGHT)
+            if f"{x},{y}" not in occupied:
+                return x, y, [rng.randrange(256) for _ in range(3)]
     return rng.randrange(WIDTH), rng.randrange(HEIGHT), [rng.randrange(256) for _ in range(3)]
 
 
@@ -212,6 +218,8 @@ def main() -> int:
             x, y, rgb = parse_decision(answer_output or raw_output)
             if (x, y, rgb) == (0, 0, [0, 0, 0]):
                 raise ValueError("model copied the placeholder decision")
+            if f"{x},{y}" in canvas["pixels"]:
+                raise ValueError("model selected an already painted pixel")
         except Exception as exc:
             x, y, rgb = fallback_decision(canvas, agent_number)
             source = f"fallback: {exc}"
