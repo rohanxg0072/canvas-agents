@@ -150,7 +150,7 @@ class TinyModel:
         if self.dry_run:
             return ""
         messages = [{"role": "user", "content": prompt}]
-        result = self.pipeline(messages, max_new_tokens=48, do_sample=True, temperature=0.8, return_full_text=False)
+        result = self.pipeline(messages, max_new_tokens=24, do_sample=True, temperature=0.8, return_full_text=False)
         generated = result[0]["generated_text"]
         if isinstance(generated, list):
             return generated[-1].get("content", str(generated[-1]))
