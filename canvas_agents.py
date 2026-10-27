@@ -119,12 +119,20 @@ def parse_decision(text: str) -> tuple[int, int, list[int]]:
     cleaned = text.strip()
     if cleaned.startswith("```"):
         cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", cleaned, flags=re.IGNORECASE)
-    if not cleaned.startswith("{"):
-        raise ValueError("model returned prose instead of a JSON object")
     matches = re.findall(r"\{[^{}]*\}", cleaned, flags=re.DOTALL)
     if not matches:
-        raise ValueError("model did not return a JSON object")
-    value = json.loads(matches[-1])
+        raise ValueError("model did not contain a JSON-like object")
+    candidates = []
+    for candidate in matches:
+        try:
+            value = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if all(key in value for key in ("x", "y", "rgb")):
+            candidates.append(value)
+    if not candidates:
+        raise ValueError("model did not contain a valid pixel decision")
+    value = candidates[-1]
     x, y = int(value["x"]), int(value["y"])
     rgb = [int(channel) for channel in value["rgb"]]
     if not (0 <= x < WIDTH and 0 <= y < HEIGHT and len(rgb) == 3 and all(0 <= n <= 255 for n in rgb)):
