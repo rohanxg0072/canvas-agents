@@ -610,5 +610,97 @@
     "timestamp": "2026-10-27T19:26:00.091847Z",
     "x": 150,
     "y": 118
+  },
+  {
+    "agent": 1,
+    "canvas_hash": "a5e3d2366f845200",
+    "previous_rgb": [
+      0,
+      0,
+      0
+    ],
+    "rgb": [
+      128,
+      128,
+      128
+    ],
+    "run": "20261027T201849Z",
+    "source": "model",
+    "step": 36,
+    "timestamp": "2026-10-27T20:20:15.966311Z",
+    "x": 16,
+    "y": 16
+  },
+  {
+    "agent": 2,
+    "canvas_hash": "e8ba984974529038",
+    "previous_rgb": null,
+    "rgb": [
+      125,
+      192,
+      95
+    ],
+    "run": "20261027T201849Z",
+    "source": "fallback: model copied the placeholder decision",
+    "step": 37,
+    "timestamp": "2026-10-27T20:21:40.963320Z",
+    "x": 95,
+    "y": 247
+  },
+  {
+    "agent": 3,
+    "canvas_hash": "14cf2eeef0b01b71",
+    "previous_rgb": [
+      128,
+      128,
+      128
+    ],
+    "rgb": [
+      107,
+      107,
+      107
+    ],
+    "run": "20261027T201849Z",
+    "source": "model",
+    "step": 38,
+    "timestamp": "2026-10-27T20:23:07.026628Z",
+    "x": 16,
+    "y": 16
+  },
+  {
+    "agent": 4,
+    "canvas_hash": "96d9ab5331114e29",
+    "previous_rgb": null,
+    "rgb": [
+      143,
+      42,
+      110
+    ],
+    "run": "20261027T201849Z",
+    "source": "fallback: model copied the placeholder decision",
+    "step": 39,
+    "timestamp": "2026-10-27T20:24:31.736355Z",
+    "x": 202,
+    "y": 247
+  },
+  {
+    "agent": 5,
+    "canvas_hash": "96d9ab5331114e29",
+    "previous_rgb": [
+      12,
+      146,
+      4
+    ],
+    "rgb": [
+      12,
+      146,
+      4
+    ],
+    "run": "20261027T201849Z",
+    "source": "model",
+    "step": 40,
+    "timestamp": "2026-10-27T20:25:57.307309Z",
+    "x": 170,
+    "y": 138
   }
 ]
