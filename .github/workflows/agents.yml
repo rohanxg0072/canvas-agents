@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name "canvas-agents[bot]"
           git config user.email "canvas-agents[bot]@users.noreply.github.com"
-          git add state traces snapshots docs/history.json
+          git add state traces snapshots canvas.svg docs/history.json docs/canvas.svg
           if git diff --cached --quiet; then
             echo "No canvas changes to commit"
           else

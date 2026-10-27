@@ -8,8 +8,11 @@ Each turn writes:
 - a sparse canvas snapshot under `snapshots/`
 - a replay record in `state/history.json`
 - the current canvas in `state/canvas.json`
+- a directly viewable current image in `canvas.svg`
 
 The `docs/` viewer replays the history in a browser and is suitable for GitHub Pages.
+
+Once Pages is enabled, the live viewer will be at `https://rohanxg0072.github.io/canvas-agents/`. GitHub also renders `canvas.svg` directly when you open it in the repository.
 
 ## Run locally
 

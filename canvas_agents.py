@@ -41,6 +41,22 @@ def save_json(path: Path, value) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
 
 
+def save_svg(canvas: dict, path: Path) -> None:
+    rects = []
+    for key, rgb in sorted(canvas["pixels"].items()):
+        x, y = key.split(",")
+        color = "#%02x%02x%02x" % tuple(rgb)
+        rects.append(f'<rect x="{x}" y="{y}" width="1" height="1" fill="{color}"/>')
+    svg = "\n".join([
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="768" height="768" shape-rendering="crispEdges">',
+        '<rect width="256" height="256" fill="#000000"/>',
+        *rects,
+        '</svg>',
+        '',
+    ])
+    path.write_text(svg)
+
+
 def load_canvas() -> dict[str, list[int]]:
     canvas = load_json(STATE_DIR / "canvas.json", {"width": WIDTH, "height": HEIGHT, "pixels": {}})
     canvas.setdefault("width", WIDTH)
@@ -190,6 +206,8 @@ def main() -> int:
         save_json(STATE_DIR / "canvas.json", canvas)
         save_json(STATE_DIR / "history.json", history)
         save_json(DOCS_DIR / "history.json", history)
+        save_svg(canvas, ROOT / "canvas.svg")
+        save_svg(canvas, DOCS_DIR / "canvas.svg")
         print(json.dumps(entry, sort_keys=True))
 
     return 0
