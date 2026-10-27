@@ -1,6 +1,6 @@
 # Canvas Agents
 
-Five independent local-model agents take turns adding exactly one RGB pixel to a shared 256×256 canvas. They receive a compact preview of the current canvas, know that other agents may have acted, and are not given a subject or drawing goal.
+Five independent local-model agents take turns adding exactly one RGB pixel to a shared 256×256 canvas. They receive a compact preview of the current canvas, know that other agents may have acted, and are told only to help make the canvas beautiful—no subject, style, or composition is prescribed.
 
 Each turn writes:
 

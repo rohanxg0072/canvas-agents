@@ -83,7 +83,7 @@ def prompt_for(agent_number: int, canvas: dict, history: list[dict]) -> str:
         f"step {item['step']}: agent {item['agent']} chose ({item['x']},{item['y']}) rgb={item['rgb']}"
         for item in recent
     ) or "(no previous turns)"
-    return f"""You are agent {agent_number} in a shared pixel canvas experiment.
+    return f"""You are agent {agent_number} in a shared pixel canvas experiment. Your only broad instruction is: help make the canvas beautiful.
 
 Other agents may have already changed the canvas, and other agents will act after you. You are not told what the canvas is supposed to depict. Inspect the current canvas preview and independently choose exactly one pixel to update. Do not explain a subject, theme, or drawing plan. Just return one JSON object with integer x and y from 0 through 255 and an rgb array of three integers from 0 through 255.
 
