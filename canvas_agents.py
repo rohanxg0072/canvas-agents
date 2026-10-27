@@ -20,7 +20,7 @@ STATE_DIR = ROOT / "state"
 TRACE_DIR = ROOT / "traces"
 SNAPSHOT_DIR = ROOT / "snapshots"
 DOCS_DIR = ROOT / "docs"
-MODEL_NAME = os.getenv("CANVAS_MODEL", "Qwen/Qwen2.5-0.5B-Instruct")
+MODEL_NAME = os.getenv("CANVAS_MODEL", "Qwen/Qwen3-0.6B")
 
 
 def now() -> str:
@@ -112,7 +112,7 @@ Recent turns:
 
 The values in the shape below are placeholders; do not copy them by default. Make an independent choice based on the current preview.
 
-Return only JSON in this exact shape:
+Use your thinking mode before answering. Put the visible reasoning in a <think>...</think> block, then return only JSON in this exact shape:
 {{"x": 0, "y": 0, "rgb": [0, 0, 0]}}"""
 
 
@@ -165,26 +165,39 @@ def parse_decision(text: str) -> tuple[int, int, list[int]]:
 class TinyModel:
     def __init__(self, dry_run: bool):
         self.dry_run = dry_run
-        self.pipeline = None
+        self.tokenizer = None
+        self.model = None
         if not dry_run:
-            from transformers import pipeline
+            from transformers import AutoModelForCausalLM, AutoTokenizer
 
-            self.pipeline = pipeline(
-                "text-generation",
-                model=MODEL_NAME,
-                device_map="cpu",
-                torch_dtype="auto",
-            )
+            self.tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+            self.model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, torch_dtype="auto")
+            self.model.eval()
 
-    def ask(self, prompt: str) -> str:
+    def ask(self, prompt: str) -> dict[str, str]:
         if self.dry_run:
-            return ""
+            return {"raw_output": "", "reasoning": "", "answer": ""}
+        import torch
+
         messages = [{"role": "user", "content": prompt}]
-        result = self.pipeline(messages, max_new_tokens=24, do_sample=True, temperature=0.8, return_full_text=False)
-        generated = result[0]["generated_text"]
-        if isinstance(generated, list):
-            return generated[-1].get("content", str(generated[-1]))
-        return str(generated)
+        rendered = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, enable_thinking=True)
+        inputs = self.tokenizer(rendered, return_tensors="pt")
+        inputs = {key: value.to(self.model.device) for key, value in inputs.items()}
+        with torch.inference_mode():
+            output_ids = self.model.generate(
+                **inputs,
+                max_new_tokens=96,
+                do_sample=True,
+                temperature=0.6,
+                top_p=0.95,
+                top_k=20,
+            )
+        generated_ids = output_ids[0][inputs["input_ids"].shape[1]:]
+        raw_output = self.tokenizer.decode(generated_ids, skip_special_tokens=True)
+        reasoning_matches = re.findall(r"<think>(.*?)</think>", raw_output, flags=re.DOTALL | re.IGNORECASE)
+        reasoning = "\n".join(reasoning_matches).strip()
+        answer = re.sub(r"<think>.*?</think>", "", raw_output, flags=re.DOTALL | re.IGNORECASE).strip()
+        return {"raw_output": raw_output, "reasoning": reasoning, "answer": answer}
 
 
 def fallback_decision(canvas: dict, agent_number: int) -> tuple[int, int, list[int]]:
@@ -206,10 +219,13 @@ def main() -> int:
 
     for agent_number in range(1, args.agents + 1):
         prompt = prompt_for(agent_number, canvas, history)
-        raw_output = model.ask(prompt)
+        response = model.ask(prompt)
+        raw_output = response["raw_output"]
+        reasoning_trace = response["reasoning"]
+        answer_output = response["answer"]
         source = "model"
         try:
-            x, y, rgb = parse_decision(raw_output)
+            x, y, rgb = parse_decision(answer_output or raw_output)
             if (x, y, rgb) == (0, 0, [0, 0, 0]):
                 raise ValueError("model copied the placeholder decision")
         except Exception as exc:
@@ -237,6 +253,8 @@ def main() -> int:
             "model": MODEL_NAME,
             "prompt": prompt,
             "raw_output": raw_output,
+            "reasoning_trace": reasoning_trace,
+            "answer_output": answer_output,
         }
         save_json(TRACE_DIR / f"{run_id}-step-{step:06d}-agent-{agent_number}.json", trace)
         snapshot = {"width": WIDTH, "height": HEIGHT, "step": step, "pixels": canvas["pixels"]}
