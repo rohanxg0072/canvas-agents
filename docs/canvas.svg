@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="768" height="768" shape-rendering="crispEdges">
 <rect width="256" height="256" fill="#000000"/>
 <rect x="0" y="0" width="1" height="1" fill="#6b6b6b"/>
+<rect x="118" y="96" width="1" height="1" fill="#e0fe11"/>
 <rect x="124" y="136" width="1" height="1" fill="#e1e0c5"/>
 <rect x="126" y="182" width="1" height="1" fill="#1a9cc0"/>
 <rect x="130" y="9" width="1" height="1" fill="#cae640"/>
@@ -8,6 +9,7 @@
 <rect x="16" y="16" width="1" height="1" fill="#6b6b6b"/>
 <rect x="161" y="251" width="1" height="1" fill="#44dc57"/>
 <rect x="162" y="63" width="1" height="1" fill="#788205"/>
+<rect x="164" y="32" width="1" height="1" fill="#f8ddbd"/>
 <rect x="165" y="1" width="1" height="1" fill="#8cc861"/>
 <rect x="165" y="104" width="1" height="1" fill="#366592"/>
 <rect x="167" y="89" width="1" height="1" fill="#2c51e2"/>
@@ -17,10 +19,12 @@
 <rect x="178" y="22" width="1" height="1" fill="#ecf6b7"/>
 <rect x="178" y="48" width="1" height="1" fill="#ecf6b7"/>
 <rect x="179" y="211" width="1" height="1" fill="#5672d2"/>
+<rect x="18" y="27" width="1" height="1" fill="#4d36a8"/>
 <rect x="198" y="235" width="1" height="1" fill="#d66d80"/>
 <rect x="202" y="247" width="1" height="1" fill="#8f2a6e"/>
 <rect x="216" y="225" width="1" height="1" fill="#8d7e8f"/>
 <rect x="234" y="171" width="1" height="1" fill="#e2fa50"/>
+<rect x="234" y="228" width="1" height="1" fill="#f0370a"/>
 <rect x="235" y="166" width="1" height="1" fill="#bb3116"/>
 <rect x="24" y="185" width="1" height="1" fill="#9cfb95"/>
 <rect x="242" y="193" width="1" height="1" fill="#6f4167"/>
@@ -30,6 +34,7 @@
 <rect x="52" y="80" width="1" height="1" fill="#20faa2"/>
 <rect x="57" y="126" width="1" height="1" fill="#58621f"/>
 <rect x="72" y="86" width="1" height="1" fill="#e9b660"/>
+<rect x="8" y="94" width="1" height="1" fill="#c05a83"/>
 <rect x="84" y="22" width="1" height="1" fill="#07c7f9"/>
 <rect x="86" y="98" width="1" height="1" fill="#23f4ba"/>
 <rect x="92" y="219" width="1" height="1" fill="#c359a9"/>
