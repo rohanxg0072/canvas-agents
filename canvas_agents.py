@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import difflib
 import hashlib
 import json
 import os
@@ -120,19 +121,40 @@ def parse_decision(text: str) -> tuple[int, int, list[int]]:
     if cleaned.startswith("```"):
         cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", cleaned, flags=re.IGNORECASE)
     matches = re.findall(r"\{[^{}]*\}", cleaned, flags=re.DOTALL)
-    if not matches:
-        raise ValueError("model did not contain a JSON-like object")
     candidates = []
-    for candidate in matches:
-        try:
-            value = json.loads(candidate)
-        except json.JSONDecodeError:
-            continue
-        if all(key in value for key in ("x", "y", "rgb")):
-            candidates.append(value)
+    canonical = '{"x":0,"y":0,"rgb":[0,0,0]}'
+    for candidate in matches or [cleaned]:
+        repairs = 0
+        attempts = [candidate]
+        repaired = candidate.replace("“", '"').replace("”", '"').replace("'", '"')
+        repaired = re.sub(r"([{,])\s*([A-Za-z_][A-Za-z0-9_]*)\s*:", r'\1"\2":', repaired)
+        repaired = re.sub(r",\s*([}\]])", r"\1", repaired)
+        if repaired != candidate:
+            repairs = 1
+            attempts.append(repaired)
+        value = None
+        for attempt in attempts:
+            try:
+                value = json.loads(attempt)
+                break
+            except json.JSONDecodeError:
+                pass
+        if value is None:
+            loose = re.search(
+                r"x\s*[:=]\s*(-?\d+).*?y\s*[:=]\s*(-?\d+).*?rgb\s*[:=]\s*[\[(]\s*(-?\d+)\s*[,; ]\s*(-?\d+)\s*[,; ]\s*(-?\d+)",
+                candidate,
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+            if loose:
+                value = {"x": int(loose.group(1)), "y": int(loose.group(2)), "rgb": [int(loose.group(3)), int(loose.group(4)), int(loose.group(5))]}
+                repairs = 2
+        if isinstance(value, dict) and all(key in value for key in ("x", "y", "rgb")):
+            shape = json.dumps({"x": value["x"], "y": value["y"], "rgb": value["rgb"]}, separators=(",", ":"))
+            similarity = difflib.SequenceMatcher(None, shape, canonical).ratio()
+            candidates.append((repairs, -similarity, value))
     if not candidates:
-        raise ValueError("model did not contain a valid pixel decision")
-    value = candidates[-1]
+        raise ValueError("model did not contain a repairable pixel decision")
+    value = min(candidates, key=lambda item: (item[0], item[1]))[2]
     x, y = int(value["x"]), int(value["y"])
     rgb = [int(channel) for channel in value["rgb"]]
     if not (0 <= x < WIDTH and 0 <= y < HEIGHT and len(rgb) == 3 and all(0 <= n <= 255 for n in rgb)):

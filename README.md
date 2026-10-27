@@ -28,6 +28,8 @@ Open <http://localhost:8000> and use the play controls.
 
 The default model is `Qwen/Qwen2.5-0.5B-Instruct`, a small CPU-friendly model. Set `CANVAS_MODEL` to another Hugging Face Transformers-compatible causal model if desired. The first run downloads model weights; later GitHub Actions runs restore the model cache.
 
+Agent output passes through a fuzzy normalizer that prefers the valid candidate requiring the fewest repairs, then uses lexical similarity as a tie-breaker. It handles prose/fences, quote and key normalization, trailing commas, and loose `x`, `y`, `rgb` formats before using the safe fallback.
+
 For a quick repository-only test without model weights:
 
 ```bash
