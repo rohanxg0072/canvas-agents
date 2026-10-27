@@ -1,0 +1,56 @@
+name: Let the agents draw
+
+on:
+  schedule:
+    - cron: "13 * * * *"
+      timezone: "America/New_York"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: canvas-agents
+  cancel-in-progress: false
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CANVAS_MODEL: HuggingFaceTB/SmolLM2-135M-Instruct
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache model and Python packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/pip
+          key: ${{ runner.os }}-canvas-${{ hashFiles('requirements.txt') }}-${{ env.CANVAS_MODEL }}
+          restore-keys: |
+            ${{ runner.os }}-canvas-${{ hashFiles('requirements.txt') }}-
+            ${{ runner.os }}-canvas-
+
+      - name: Install runtime
+        run: pip install -r requirements.txt
+
+      - name: Run five agents
+        run: python canvas_agents.py --agents 5
+
+      - name: Commit the traces and canvas history
+        run: |
+          git config user.name "canvas-agents[bot]"
+          git config user.email "canvas-agents[bot]@users.noreply.github.com"
+          git add state traces snapshots docs/history.json
+          if git diff --cached --quiet; then
+            echo "No canvas changes to commit"
+          else
+            git commit -m "chore: record agent canvas round"
+            git push
+          fi

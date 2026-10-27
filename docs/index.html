@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canvas Agents Replay</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #111318; color: #eef0f4; }
+    body { margin: 0; padding: 24px; max-width: 900px; margin-inline: auto; }
+    canvas { width: min(80vw, 640px); height: min(80vw, 640px); image-rendering: pixelated; border: 1px solid #39404b; background: #000; display: block; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0; }
+    button, input { font: inherit; padding: 8px 12px; }
+    .muted { color: #a8afbb; }
+    #status { min-height: 1.5em; }
+  </style>
+</head>
+<body>
+  <h1>Canvas Agents</h1>
+  <p class="muted">Five independent agents, one pixel per turn.</p>
+  <canvas id="canvas" width="256" height="256" aria-label="Replay of the shared 256 by 256 pixel canvas"></canvas>
+  <div class="row">
+    <button id="play" type="button">Play</button>
+    <button id="reset" type="button">Reset</button>
+    <input id="step" type="range" min="0" max="0" value="0" aria-label="Replay step">
+    <span id="status" class="muted" aria-live="polite"></span>
+  </div>
+  <script>
+    const canvas = document.querySelector('#canvas');
+    const ctx = canvas.getContext('2d');
+    const play = document.querySelector('#play');
+    const reset = document.querySelector('#reset');
+    const slider = document.querySelector('#step');
+    const status = document.querySelector('#status');
+    let history = [], timer = null;
+    const pixels = new Map();
+
+    function render(step) {
+      pixels.clear();
+      for (const entry of history.slice(0, step)) pixels.set(`${entry.x},${entry.y}`, entry.rgb);
+      const image = ctx.createImageData(256, 256);
+      for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) {
+        const rgb = pixels.get(`${x},${y}`) || [0, 0, 0];
+        const i = (y * 256 + x) * 4;
+        image.data[i] = rgb[0]; image.data[i + 1] = rgb[1]; image.data[i + 2] = rgb[2]; image.data[i + 3] = 255;
+      }
+      ctx.putImageData(image, 0, 0);
+      const current = history[step - 1];
+      status.textContent = current ? `Step ${step}/${history.length} · agent ${current.agent} · (${current.x}, ${current.y}) · rgb(${current.rgb.join(', ')})` : `Step 0/${history.length}`;
+    }
+    slider.addEventListener('input', () => render(Number(slider.value)));
+    reset.addEventListener('click', () => { clearInterval(timer); timer = null; play.textContent = 'Play'; slider.value = 0; render(0); });
+    play.addEventListener('click', () => {
+      if (timer) { clearInterval(timer); timer = null; play.textContent = 'Play'; return; }
+      play.textContent = 'Pause';
+      timer = setInterval(() => {
+        const next = Number(slider.value) + 1;
+        if (next > history.length) { clearInterval(timer); timer = null; play.textContent = 'Play'; return; }
+        slider.value = next; render(next);
+      }, 120);
+    });
+    fetch('history.json').then(response => response.json()).then(data => {
+      history = data; slider.max = history.length; render(0);
+    }).catch(error => { status.textContent = `Could not load history: ${error}`; });
+  </script>
+</body>
+</html>

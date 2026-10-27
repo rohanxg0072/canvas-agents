@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+"""Run independent tiny-model agents against a shared sparse 256x256 canvas."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import random
+import re
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+WIDTH = HEIGHT = 256
+ROOT = Path(__file__).resolve().parent
+STATE_DIR = ROOT / "state"
+TRACE_DIR = ROOT / "traces"
+SNAPSHOT_DIR = ROOT / "snapshots"
+DOCS_DIR = ROOT / "docs"
+MODEL_NAME = os.getenv("CANVAS_MODEL", "HuggingFaceTB/SmolLM2-135M-Instruct")
+
+
+def now() -> str:
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def ensure_dirs() -> None:
+    for directory in (STATE_DIR, TRACE_DIR, SNAPSHOT_DIR, DOCS_DIR):
+        directory.mkdir(parents=True, exist_ok=True)
+
+
+def load_json(path: Path, default):
+    if not path.exists():
+        return default
+    return json.loads(path.read_text())
+
+
+def save_json(path: Path, value) -> None:
+    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
+
+
+def load_canvas() -> dict[str, list[int]]:
+    canvas = load_json(STATE_DIR / "canvas.json", {"width": WIDTH, "height": HEIGHT, "pixels": {}})
+    canvas.setdefault("width", WIDTH)
+    canvas.setdefault("height", HEIGHT)
+    canvas.setdefault("pixels", {})
+    return canvas
+
+
+def canvas_hash(canvas: dict) -> str:
+    payload = json.dumps(canvas, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(payload).hexdigest()[:16]
+
+
+def preview(canvas: dict, size: int = 16) -> str:
+    """Render a compact 16x16 average-color preview for a text-only model."""
+    pixels = canvas["pixels"]
+    lines = []
+    for py in range(size):
+        row = []
+        for px in range(size):
+            r_total = g_total = b_total = count = 0
+            x0, x1 = px * WIDTH // size, (px + 1) * WIDTH // size
+            y0, y1 = py * HEIGHT // size, (py + 1) * HEIGHT // size
+            for y in range(y0, y1):
+                for x in range(x0, x1):
+                    color = pixels.get(f"{x},{y}")
+                    if color:
+                        r_total += color[0]
+                        g_total += color[1]
+                        b_total += color[2]
+                        count += 1
+            row.append("#000000" if not count else "#%02x%02x%02x" % (r_total // count, g_total // count, b_total // count))
+        lines.append(" ".join(row))
+    return "\n".join(lines)
+
+
+def prompt_for(agent_number: int, canvas: dict, history: list[dict]) -> str:
+    recent = history[-8:]
+    recent_text = "\n".join(
+        f"step {item['step']}: agent {item['agent']} chose ({item['x']},{item['y']}) rgb={item['rgb']}"
+        for item in recent
+    ) or "(no previous turns)"
+    return f"""You are agent {agent_number} in a shared pixel canvas experiment.
+
+Other agents may have already changed the canvas, and other agents will act after you. You are not told what the canvas is supposed to depict. Inspect the current canvas preview and independently choose exactly one pixel to update. Do not explain a subject, theme, or drawing plan. Just return one JSON object with integer x and y from 0 through 255 and an rgb array of three integers from 0 through 255.
+
+Current canvas preview, downsampled to 16x16 (#rrggbb; each row is one line):
+{preview(canvas)}
+
+Recent turns:
+{recent_text}
+
+Return only JSON in this exact shape:
+{{"x": 0, "y": 0, "rgb": [0, 0, 0]}}"""
+
+
+def parse_decision(text: str) -> tuple[int, int, list[int]]:
+    matches = re.findall(r"\{[^{}]*\}", text)
+    if not matches:
+        raise ValueError("model did not return a JSON object")
+    value = json.loads(matches[-1])
+    x, y = int(value["x"]), int(value["y"])
+    rgb = [int(channel) for channel in value["rgb"]]
+    if not (0 <= x < WIDTH and 0 <= y < HEIGHT and len(rgb) == 3 and all(0 <= n <= 255 for n in rgb)):
+        raise ValueError("decision is outside the canvas or RGB range")
+    return x, y, rgb
+
+
+class TinyModel:
+    def __init__(self, dry_run: bool):
+        self.dry_run = dry_run
+        self.pipeline = None
+        if not dry_run:
+            from transformers import pipeline
+
+            self.pipeline = pipeline(
+                "text-generation",
+                model=MODEL_NAME,
+                device_map="cpu",
+                torch_dtype="auto",
+            )
+
+    def ask(self, prompt: str) -> str:
+        if self.dry_run:
+            return ""
+        messages = [{"role": "user", "content": prompt}]
+        result = self.pipeline(messages, max_new_tokens=80, do_sample=True, temperature=0.9, return_full_text=False)
+        generated = result[0]["generated_text"]
+        if isinstance(generated, list):
+            return generated[-1].get("content", str(generated[-1]))
+        return str(generated)
+
+
+def fallback_decision(canvas: dict, agent_number: int) -> tuple[int, int, list[int]]:
+    seed = f"{canvas_hash(canvas)}:{agent_number}:{now()}"
+    rng = random.Random(seed)
+    return rng.randrange(WIDTH), rng.randrange(HEIGHT), [rng.randrange(256) for _ in range(3)]
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--agents", type=int, default=5)
+    parser.add_argument("--dry-run", action="store_true")
+    args = parser.parse_args()
+    ensure_dirs()
+    canvas = load_canvas()
+    history = load_json(STATE_DIR / "history.json", [])
+    model = TinyModel(args.dry_run)
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+
+    for agent_number in range(1, args.agents + 1):
+        prompt = prompt_for(agent_number, canvas, history)
+        raw_output = model.ask(prompt)
+        source = "model"
+        try:
+            x, y, rgb = parse_decision(raw_output)
+        except Exception as exc:
+            x, y, rgb = fallback_decision(canvas, agent_number)
+            source = f"fallback: {exc}"
+
+        step = len(history) + 1
+        key = f"{x},{y}"
+        previous = canvas["pixels"].get(key)
+        canvas["pixels"][key] = rgb
+        entry = {
+            "step": step,
+            "run": run_id,
+            "timestamp": now(),
+            "agent": agent_number,
+            "x": x,
+            "y": y,
+            "rgb": rgb,
+            "previous_rgb": previous,
+            "source": source,
+            "canvas_hash": canvas_hash(canvas),
+        }
+        trace = {
+            "entry": entry,
+            "model": MODEL_NAME,
+            "prompt": prompt,
+            "raw_output": raw_output,
+        }
+        save_json(TRACE_DIR / f"{run_id}-step-{step:06d}-agent-{agent_number}.json", trace)
+        snapshot = {"width": WIDTH, "height": HEIGHT, "step": step, "pixels": canvas["pixels"]}
+        save_json(SNAPSHOT_DIR / f"step-{step:06d}.json", snapshot)
+        history.append(entry)
+        save_json(STATE_DIR / "canvas.json", canvas)
+        save_json(STATE_DIR / "history.json", history)
+        save_json(DOCS_DIR / "history.json", history)
+        print(json.dumps(entry, sort_keys=True))
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
