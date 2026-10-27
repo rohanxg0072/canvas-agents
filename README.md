@@ -26,7 +26,7 @@ python3 -m http.server 8000 --directory docs
 
 Open <http://localhost:8000> and use the play controls.
 
-The default model is `HuggingFaceTB/SmolLM2-135M-Instruct`, a small CPU-friendly model. Set `CANVAS_MODEL` to another Hugging Face Transformers-compatible causal model if desired. The first run downloads model weights; later GitHub Actions runs restore the model cache.
+The default model is `Qwen/Qwen2.5-0.5B-Instruct`, a small CPU-friendly model. Set `CANVAS_MODEL` to another Hugging Face Transformers-compatible causal model if desired. The first run downloads model weights; later GitHub Actions runs restore the model cache.
 
 For a quick repository-only test without model weights:
 

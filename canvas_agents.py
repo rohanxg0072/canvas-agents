@@ -19,7 +19,7 @@ STATE_DIR = ROOT / "state"
 TRACE_DIR = ROOT / "traces"
 SNAPSHOT_DIR = ROOT / "snapshots"
 DOCS_DIR = ROOT / "docs"
-MODEL_NAME = os.getenv("CANVAS_MODEL", "HuggingFaceTB/SmolLM2-135M-Instruct")
+MODEL_NAME = os.getenv("CANVAS_MODEL", "Qwen/Qwen2.5-0.5B-Instruct")
 
 
 def now() -> str:
@@ -114,7 +114,12 @@ Return only JSON in this exact shape:
 
 
 def parse_decision(text: str) -> tuple[int, int, list[int]]:
-    matches = re.findall(r"\{[^{}]*\}", text)
+    cleaned = text.strip()
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", cleaned, flags=re.IGNORECASE)
+    if not cleaned.startswith("{"):
+        raise ValueError("model returned prose instead of a JSON object")
+    matches = re.findall(r"\{[^{}]*\}", cleaned, flags=re.DOTALL)
     if not matches:
         raise ValueError("model did not return a JSON object")
     value = json.loads(matches[-1])
@@ -143,7 +148,7 @@ class TinyModel:
         if self.dry_run:
             return ""
         messages = [{"role": "user", "content": prompt}]
-        result = self.pipeline(messages, max_new_tokens=80, do_sample=True, temperature=0.9, return_full_text=False)
+        result = self.pipeline(messages, max_new_tokens=48, do_sample=True, temperature=0.8, return_full_text=False)
         generated = result[0]["generated_text"]
         if isinstance(generated, list):
             return generated[-1].get("content", str(generated[-1]))

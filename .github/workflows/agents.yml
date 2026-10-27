@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      CANVAS_MODEL: HuggingFaceTB/SmolLM2-135M-Instruct
+      CANVAS_MODEL: Qwen/Qwen2.5-0.5B-Instruct
     steps:
       - uses: actions/checkout@v4
 
