@@ -109,6 +109,8 @@ Current canvas preview, downsampled to 16x16 (#rrggbb; each row is one line):
 Recent turns:
 {recent_text}
 
+The values in the shape below are placeholders; do not copy them by default. Make an independent choice based on the current preview.
+
 Return only JSON in this exact shape:
 {{"x": 0, "y": 0, "rgb": [0, 0, 0]}}"""
 
@@ -178,6 +180,8 @@ def main() -> int:
         source = "model"
         try:
             x, y, rgb = parse_decision(raw_output)
+            if (x, y, rgb) == (0, 0, [0, 0, 0]):
+                raise ValueError("model copied the placeholder decision")
         except Exception as exc:
             x, y, rgb = fallback_decision(canvas, agent_number)
             source = f"fallback: {exc}"
