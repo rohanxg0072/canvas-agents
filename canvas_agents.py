@@ -175,7 +175,7 @@ class TinyModel:
         if self.dry_run:
             return {"raw_output": "", "reasoning": "", "answer": ""}
         messages = [{"role": "user", "content": prompt}]
-        result = self.pipeline(messages, max_new_tokens=24, do_sample=True, temperature=0.8, return_full_text=False)
+        result = self.pipeline(messages, max_new_tokens=64, do_sample=True, temperature=0.8, return_full_text=False)
         generated = result[0]["generated_text"]
         answer = generated[-1].get("content", str(generated[-1])) if isinstance(generated, list) else str(generated)
         reasoning_matches = re.findall(r"<think>(.*?)</think>", answer, flags=re.DOTALL | re.IGNORECASE)
