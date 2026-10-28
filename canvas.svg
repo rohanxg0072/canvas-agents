@@ -12,8 +12,12 @@
 <rect x="128" y="218" width="1" height="1" fill="#c688be"/>
 <rect x="130" y="9" width="1" height="1" fill="#cae640"/>
 <rect x="132" y="206" width="1" height="1" fill="#f1f2f3"/>
+<rect x="148" y="217" width="1" height="1" fill="#5999ed"/>
 <rect x="150" y="118" width="1" height="1" fill="#0a1650"/>
+<rect x="155" y="113" width="1" height="1" fill="#a40ce1"/>
+<rect x="155" y="127" width="1" height="1" fill="#77b967"/>
 <rect x="16" y="16" width="1" height="1" fill="#6b6b6b"/>
+<rect x="160" y="160" width="1" height="1" fill="#000000"/>
 <rect x="161" y="251" width="1" height="1" fill="#44dc57"/>
 <rect x="162" y="63" width="1" height="1" fill="#788205"/>
 <rect x="164" y="32" width="1" height="1" fill="#f8ddbd"/>
@@ -46,6 +50,7 @@
 <rect x="247" y="16" width="1" height="1" fill="#8f2a6e"/>
 <rect x="253" y="143" width="1" height="1" fill="#1c1c98"/>
 <rect x="36" y="44" width="1" height="1" fill="#de705f"/>
+<rect x="38" y="5" width="1" height="1" fill="#7ed0db"/>
 <rect x="41" y="103" width="1" height="1" fill="#9e51f3"/>
 <rect x="43" y="120" width="1" height="1" fill="#dd775e"/>
 <rect x="48" y="133" width="1" height="1" fill="#1bc41a"/>
