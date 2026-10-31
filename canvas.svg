@@ -20,6 +20,7 @@
 <rect x="106" y="171" width="1" height="1" fill="#0a84d3"/>
 <rect x="106" y="235" width="1" height="1" fill="#95b974"/>
 <rect x="107" y="0" width="1" height="1" fill="#a576d7"/>
+<rect x="109" y="153" width="1" height="1" fill="#ee5bff"/>
 <rect x="11" y="10" width="1" height="1" fill="#000000"/>
 <rect x="11" y="134" width="1" height="1" fill="#8d72fa"/>
 <rect x="110" y="176" width="1" height="1" fill="#0a6f39"/>
@@ -162,6 +163,7 @@
 <rect x="176" y="168" width="1" height="1" fill="#7fe2e6"/>
 <rect x="176" y="224" width="1" height="1" fill="#c2d950"/>
 <rect x="177" y="121" width="1" height="1" fill="#fe51b5"/>
+<rect x="177" y="207" width="1" height="1" fill="#4f298c"/>
 <rect x="177" y="212" width="1" height="1" fill="#d030ec"/>
 <rect x="177" y="229" width="1" height="1" fill="#af4661"/>
 <rect x="178" y="116" width="1" height="1" fill="#f64fd6"/>
@@ -224,10 +226,12 @@
 <rect x="206" y="229" width="1" height="1" fill="#cab8a9"/>
 <rect x="207" y="102" width="1" height="1" fill="#3ebb07"/>
 <rect x="207" y="219" width="1" height="1" fill="#61eff0"/>
+<rect x="207" y="49" width="1" height="1" fill="#dfc9f1"/>
 <rect x="208" y="139" width="1" height="1" fill="#9f47d2"/>
 <rect x="209" y="7" width="1" height="1" fill="#5f48f3"/>
 <rect x="21" y="142" width="1" height="1" fill="#b6afeb"/>
 <rect x="210" y="172" width="1" height="1" fill="#96714b"/>
+<rect x="211" y="109" width="1" height="1" fill="#906b6b"/>
 <rect x="211" y="120" width="1" height="1" fill="#939e8c"/>
 <rect x="211" y="36" width="1" height="1" fill="#d719b4"/>
 <rect x="212" y="230" width="1" height="1" fill="#8104a7"/>
@@ -328,6 +332,7 @@
 <rect x="34" y="120" width="1" height="1" fill="#1d8b77"/>
 <rect x="34" y="184" width="1" height="1" fill="#319da9"/>
 <rect x="34" y="251" width="1" height="1" fill="#60a52a"/>
+<rect x="36" y="35" width="1" height="1" fill="#7e72ec"/>
 <rect x="36" y="44" width="1" height="1" fill="#de705f"/>
 <rect x="37" y="167" width="1" height="1" fill="#585aec"/>
 <rect x="37" y="254" width="1" height="1" fill="#7ad9eb"/>
