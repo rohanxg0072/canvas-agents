@@ -11,6 +11,7 @@
 <rect x="10" y="0" width="1" height="1" fill="#000000"/>
 <rect x="10" y="10" width="1" height="1" fill="#c5a6de"/>
 <rect x="10" y="159" width="1" height="1" fill="#a62764"/>
+<rect x="100" y="167" width="1" height="1" fill="#783d1f"/>
 <rect x="101" y="147" width="1" height="1" fill="#453256"/>
 <rect x="101" y="228" width="1" height="1" fill="#ddb6ee"/>
 <rect x="101" y="53" width="1" height="1" fill="#263219"/>
@@ -380,6 +381,7 @@
 <rect x="175" y="12" width="1" height="1" fill="#49d78e"/>
 <rect x="175" y="219" width="1" height="1" fill="#8415dd"/>
 <rect x="175" y="247" width="1" height="1" fill="#aa9a08"/>
+<rect x="175" y="30" width="1" height="1" fill="#2ef5e1"/>
 <rect x="175" y="51" width="1" height="1" fill="#0c29cf"/>
 <rect x="175" y="59" width="1" height="1" fill="#700c76"/>
 <rect x="176" y="168" width="1" height="1" fill="#7fe2e6"/>
@@ -954,6 +956,7 @@
 <rect x="68" y="135" width="1" height="1" fill="#54d6d4"/>
 <rect x="68" y="16" width="1" height="1" fill="#0825cb"/>
 <rect x="68" y="198" width="1" height="1" fill="#59c0bc"/>
+<rect x="68" y="95" width="1" height="1" fill="#0c9de2"/>
 <rect x="69" y="112" width="1" height="1" fill="#60d530"/>
 <rect x="69" y="194" width="1" height="1" fill="#028223"/>
 <rect x="69" y="45" width="1" height="1" fill="#d8e258"/>
@@ -1051,10 +1054,12 @@
 <rect x="93" y="17" width="1" height="1" fill="#450b8c"/>
 <rect x="93" y="253" width="1" height="1" fill="#0d84b8"/>
 <rect x="93" y="29" width="1" height="1" fill="#412e15"/>
+<rect x="93" y="92" width="1" height="1" fill="#a43a32"/>
 <rect x="94" y="61" width="1" height="1" fill="#dcb8bc"/>
 <rect x="95" y="128" width="1" height="1" fill="#ec24cf"/>
 <rect x="95" y="247" width="1" height="1" fill="#7dc05f"/>
 <rect x="96" y="101" width="1" height="1" fill="#218829"/>
+<rect x="96" y="106" width="1" height="1" fill="#34dd03"/>
 <rect x="96" y="123" width="1" height="1" fill="#1fe24b"/>
 <rect x="96" y="167" width="1" height="1" fill="#2d2b89"/>
 <rect x="96" y="187" width="1" height="1" fill="#855961"/>
