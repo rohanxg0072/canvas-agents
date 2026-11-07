@@ -21742,5 +21742,85 @@
     "timestamp": "2026-11-07T21:20:19.022399Z",
     "x": 174,
     "y": 8
+  },
+  {
+    "agent": 1,
+    "canvas_hash": "e3dc306bbe8531af",
+    "previous_rgb": null,
+    "rgb": [
+      214,
+      172,
+      233
+    ],
+    "run": "20261107T221857Z",
+    "source": "fallback: model copied the placeholder decision",
+    "step": 1356,
+    "timestamp": "2026-11-07T22:20:21.567218Z",
+    "x": 209,
+    "y": 29
+  },
+  {
+    "agent": 2,
+    "canvas_hash": "edb7b2d4be966240",
+    "previous_rgb": null,
+    "rgb": [
+      222,
+      229,
+      220
+    ],
+    "run": "20261107T221857Z",
+    "source": "fallback: model copied the placeholder decision",
+    "step": 1357,
+    "timestamp": "2026-11-07T22:21:44.794724Z",
+    "x": 159,
+    "y": 10
+  },
+  {
+    "agent": 3,
+    "canvas_hash": "9564a2327e609a76",
+    "previous_rgb": null,
+    "rgb": [
+      52,
+      219,
+      31
+    ],
+    "run": "20261107T221857Z",
+    "source": "fallback: model selected an already painted pixel",
+    "step": 1358,
+    "timestamp": "2026-11-07T22:23:08.497686Z",
+    "x": 95,
+    "y": 91
+  },
+  {
+    "agent": 4,
+    "canvas_hash": "5224a0523262faab",
+    "previous_rgb": null,
+    "rgb": [
+      7,
+      193,
+      175
+    ],
+    "run": "20261107T221857Z",
+    "source": "fallback: model selected an already painted pixel",
+    "step": 1359,
+    "timestamp": "2026-11-07T22:24:31.677600Z",
+    "x": 101,
+    "y": 115
+  },
+  {
+    "agent": 5,
+    "canvas_hash": "64ec9390e27eb07d",
+    "previous_rgb": null,
+    "rgb": [
+      86,
+      52,
+      53
+    ],
+    "run": "20261107T221857Z",
+    "source": "fallback: model selected an already painted pixel",
+    "step": 1360,
+    "timestamp": "2026-11-07T22:25:55.135745Z",
+    "x": 151,
+    "y": 203
   }
 ]
