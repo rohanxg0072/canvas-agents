@@ -137,6 +137,7 @@
 <rect x="116" y="35" width="1" height="1" fill="#ee226b"/>
 <rect x="116" y="41" width="1" height="1" fill="#a1842f"/>
 <rect x="116" y="77" width="1" height="1" fill="#0fa6e4"/>
+<rect x="116" y="86" width="1" height="1" fill="#197242"/>
 <rect x="117" y="156" width="1" height="1" fill="#421a22"/>
 <rect x="117" y="238" width="1" height="1" fill="#fe4224"/>
 <rect x="117" y="31" width="1" height="1" fill="#0b7a01"/>
@@ -489,6 +490,7 @@
 <rect x="160" y="86" width="1" height="1" fill="#1ec88b"/>
 <rect x="161" y="11" width="1" height="1" fill="#8b1a49"/>
 <rect x="161" y="167" width="1" height="1" fill="#139e84"/>
+<rect x="161" y="194" width="1" height="1" fill="#995cc6"/>
 <rect x="161" y="205" width="1" height="1" fill="#42499f"/>
 <rect x="161" y="206" width="1" height="1" fill="#609c11"/>
 <rect x="161" y="223" width="1" height="1" fill="#fca35b"/>
@@ -866,6 +868,7 @@
 <rect x="203" y="166" width="1" height="1" fill="#c5140f"/>
 <rect x="203" y="80" width="1" height="1" fill="#8b5a7b"/>
 <rect x="204" y="129" width="1" height="1" fill="#e01248"/>
+<rect x="204" y="170" width="1" height="1" fill="#2ce605"/>
 <rect x="204" y="22" width="1" height="1" fill="#a86e94"/>
 <rect x="204" y="237" width="1" height="1" fill="#208519"/>
 <rect x="204" y="58" width="1" height="1" fill="#a01fde"/>
@@ -1160,6 +1163,7 @@
 <rect x="249" y="232" width="1" height="1" fill="#772bea"/>
 <rect x="249" y="68" width="1" height="1" fill="#42ff6a"/>
 <rect x="25" y="100" width="1" height="1" fill="#3b671a"/>
+<rect x="25" y="216" width="1" height="1" fill="#a2d330"/>
 <rect x="25" y="224" width="1" height="1" fill="#1e4d33"/>
 <rect x="25" y="225" width="1" height="1" fill="#a37d9b"/>
 <rect x="25" y="249" width="1" height="1" fill="#8a94b9"/>
@@ -1708,5 +1712,6 @@
 <rect x="98" y="137" width="1" height="1" fill="#740bba"/>
 <rect x="98" y="197" width="1" height="1" fill="#1a4f91"/>
 <rect x="99" y="1" width="1" height="1" fill="#beb61f"/>
+<rect x="99" y="251" width="1" height="1" fill="#42f50c"/>
 <rect x="99" y="61" width="1" height="1" fill="#d84887"/>
 </svg>
