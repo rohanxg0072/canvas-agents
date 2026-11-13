@@ -410,6 +410,7 @@
 <rect x="143" y="227" width="1" height="1" fill="#4f0841"/>
 <rect x="143" y="230" width="1" height="1" fill="#df7731"/>
 <rect x="143" y="248" width="1" height="1" fill="#557111"/>
+<rect x="143" y="26" width="1" height="1" fill="#7d495e"/>
 <rect x="143" y="94" width="1" height="1" fill="#c69116"/>
 <rect x="144" y="0" width="1" height="1" fill="#fcc763"/>
 <rect x="144" y="11" width="1" height="1" fill="#14f5c5"/>
@@ -545,6 +546,7 @@
 <rect x="16" y="143" width="1" height="1" fill="#3e2176"/>
 <rect x="16" y="16" width="1" height="1" fill="#6b6b6b"/>
 <rect x="16" y="175" width="1" height="1" fill="#a84538"/>
+<rect x="16" y="19" width="1" height="1" fill="#c2f4f9"/>
 <rect x="16" y="208" width="1" height="1" fill="#af70e2"/>
 <rect x="16" y="209" width="1" height="1" fill="#b1b7c3"/>
 <rect x="16" y="23" width="1" height="1" fill="#000000"/>
@@ -1078,6 +1080,7 @@
 <rect x="215" y="34" width="1" height="1" fill="#55faeb"/>
 <rect x="215" y="40" width="1" height="1" fill="#6402c3"/>
 <rect x="215" y="54" width="1" height="1" fill="#743a33"/>
+<rect x="215" y="97" width="1" height="1" fill="#c465ef"/>
 <rect x="216" y="144" width="1" height="1" fill="#4f00c7"/>
 <rect x="216" y="205" width="1" height="1" fill="#4cc9d0"/>
 <rect x="216" y="225" width="1" height="1" fill="#8d7e8f"/>
@@ -1331,10 +1334,12 @@
 <rect x="248" y="80" width="1" height="1" fill="#ec99e4"/>
 <rect x="248" y="83" width="1" height="1" fill="#6ee1fc"/>
 <rect x="249" y="129" width="1" height="1" fill="#431c07"/>
+<rect x="249" y="133" width="1" height="1" fill="#c2f4f9"/>
 <rect x="249" y="190" width="1" height="1" fill="#002d30"/>
 <rect x="249" y="197" width="1" height="1" fill="#6b0d89"/>
 <rect x="249" y="217" width="1" height="1" fill="#64a9ef"/>
 <rect x="249" y="232" width="1" height="1" fill="#772bea"/>
+<rect x="249" y="249" width="1" height="1" fill="#ffffff"/>
 <rect x="249" y="25" width="1" height="1" fill="#8d974d"/>
 <rect x="249" y="32" width="1" height="1" fill="#d50003"/>
 <rect x="249" y="68" width="1" height="1" fill="#42ff6a"/>
