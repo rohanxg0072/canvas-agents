@@ -148,6 +148,7 @@
 <rect x="110" y="248" width="1" height="1" fill="#3e55eb"/>
 <rect x="110" y="3" width="1" height="1" fill="#6f7039"/>
 <rect x="110" y="66" width="1" height="1" fill="#49d6db"/>
+<rect x="110" y="86" width="1" height="1" fill="#997597"/>
 <rect x="110" y="97" width="1" height="1" fill="#7be4ff"/>
 <rect x="111" y="103" width="1" height="1" fill="#6f6787"/>
 <rect x="111" y="121" width="1" height="1" fill="#7013b9"/>
@@ -614,6 +615,7 @@
 <rect x="145" y="216" width="1" height="1" fill="#c156c8"/>
 <rect x="145" y="235" width="1" height="1" fill="#50180c"/>
 <rect x="145" y="5" width="1" height="1" fill="#f1ef77"/>
+<rect x="145" y="68" width="1" height="1" fill="#19abdf"/>
 <rect x="145" y="71" width="1" height="1" fill="#667c39"/>
 <rect x="145" y="83" width="1" height="1" fill="#e2a7d4"/>
 <rect x="145" y="88" width="1" height="1" fill="#897e12"/>
@@ -688,6 +690,7 @@
 <rect x="151" y="231" width="1" height="1" fill="#4f5ae5"/>
 <rect x="151" y="242" width="1" height="1" fill="#13cb74"/>
 <rect x="151" y="245" width="1" height="1" fill="#1afa0d"/>
+<rect x="151" y="98" width="1" height="1" fill="#ac579c"/>
 <rect x="152" y="105" width="1" height="1" fill="#16801f"/>
 <rect x="152" y="12" width="1" height="1" fill="#0f2d87"/>
 <rect x="152" y="148" width="1" height="1" fill="#b737b2"/>
@@ -1404,6 +1407,7 @@
 <rect x="201" y="170" width="1" height="1" fill="#abd36a"/>
 <rect x="201" y="173" width="1" height="1" fill="#639e29"/>
 <rect x="201" y="241" width="1" height="1" fill="#80f957"/>
+<rect x="201" y="54" width="1" height="1" fill="#2c427d"/>
 <rect x="201" y="59" width="1" height="1" fill="#9165ed"/>
 <rect x="201" y="75" width="1" height="1" fill="#c61652"/>
 <rect x="201" y="95" width="1" height="1" fill="#835661"/>
@@ -2577,6 +2581,7 @@
 <rect x="76" y="104" width="1" height="1" fill="#131404"/>
 <rect x="76" y="125" width="1" height="1" fill="#4f23ca"/>
 <rect x="76" y="126" width="1" height="1" fill="#7f5f5b"/>
+<rect x="76" y="133" width="1" height="1" fill="#88b3e2"/>
 <rect x="76" y="134" width="1" height="1" fill="#d4cf67"/>
 <rect x="76" y="140" width="1" height="1" fill="#17acb6"/>
 <rect x="76" y="191" width="1" height="1" fill="#8b3fc1"/>
